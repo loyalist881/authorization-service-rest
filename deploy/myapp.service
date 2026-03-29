@@ -1,0 +1,15 @@
+[Unit]
+Description=My Spring Boot Docker Service
+# If you are testing through WSL, then Requires and After are not required
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+RestartSec=10
+ExecStartPre=-/usr/bin/docker rm -f myapp
+ExecStart=/usr/bin/docker run --name myapp -p 8080:8080 myapp:latest
+ExecStop=/usr/bin/docker stop myapp
+
+[Install]
+WantedBy=multi-user.target
